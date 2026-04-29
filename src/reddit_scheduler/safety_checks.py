@@ -61,13 +61,13 @@ def respects_subreddit_cooldown(
     return True
 
 
-def respects_account_cooldown(log_rows: list[dict], min_gap_hours: int) -> bool:
+def respects_account_cooldown(log_rows: list[dict], min_gap_minutes: int) -> bool:
     """Return True if enough time has passed since the last post from this account.
 
     Prevents rapid-fire posting across all subreddits regardless of
     per-subreddit cooldowns.
     """
-    cutoff = datetime.now(tz=timezone.utc) - timedelta(hours=min_gap_hours)
+    cutoff = datetime.now(tz=timezone.utc) - timedelta(minutes=min_gap_minutes)
     for row in log_rows:
         if row.get("action") not in ("posted", "approved_disabled"):
             continue

@@ -1,11 +1,11 @@
 posting_account: u/PerceptionStudies
 
 global_limits:
-  daily_post_limit: 2
-  per_account_min_gap_hours: 6
+  daily_post_limit: 4
+  per_account_min_gap_minutes: 25
 
 per_subreddit:
-  cooldown_hours: 168  # 1 week between posts to same subreddit
+  cooldown_hours: 25  # 25-hour gap between similar posts to same subreddit
 
 duplicate_risk:
   similar_title_window_days: 30
@@ -14,25 +14,114 @@ allowed_subreddits:
   - SampleSize
   - TakeMySurvey
 
+# Time window (in minutes) around a scheduled slot during which the
+# scheduler will consider that slot "due". Prevents accidental misses
+# if the scheduler is invoked a few minutes late.
+schedule_window_minutes: 30
+
 studies:
-  - id: photo_filter_v1
+
+  - id: study_a
     title: "Photo Filter Preference Survey (5-10 min)"
-    survey_url: https://example.com/survey/photo-filter
-    irb_statement: "IRB approval on file. Contact: research@example.com"
+    survey_url: https://example.com/survey/study-a
     eligibility: "Adults 18+, English-speaking"
-    min_required_responses: 0
-    target_responses: 250
+    estimated_time_minutes: 7
+    compensation: "None (academic research)"
+    researcher_contact: "research@example.com"
     active: true
     required_fields:
       - title
       - survey_url
-      - irb_statement
       - eligibility
+      - estimated_time_minutes
+      - researcher_contact
     post_template: |
-      Short academic survey on photo filter preferences (5-10 min).
+      Short survey on photo filter preferences (~{estimated_time_minutes} min).
 
       Eligibility: {eligibility}
+      Compensation: {compensation}
 
       Link: {survey_url}
 
-      {irb_statement}
+      Questions? Contact: {researcher_contact}
+
+    # Aggregate-only data source. Read each run to record the current
+    # response count alongside the post log entry. Never reads any
+    # individual respondent's data.
+    data_source:
+      type: sheets
+      sheet_id: __redacted__
+      range: "'Form Responses 1'!A:A"
+
+    posting_plan:
+      - subreddit: SampleSize
+        flair: "Academic"
+        timezone: America/New_York
+        slots:
+          - { day: mon, time: "12:00" }
+          - { day: tue, time: "13:00" }
+          - { day: wed, time: "14:00" }
+          - { day: thu, time: "15:00" }
+          - { day: fri, time: "16:00" }
+      - subreddit: TakeMySurvey
+        flair: "Academic"
+        timezone: America/New_York
+        slots:
+          - { day: mon, time: "11:00" }
+          - { day: tue, time: "12:00" }
+          - { day: wed, time: "13:00" }
+          - { day: thu, time: "14:00" }
+          - { day: fri, time: "15:00" }
+
+  - id: study_b
+    title: "Color Slider Perception Study (10 min)"
+    survey_url: https://example.com/survey/study-b
+    eligibility: "Adults 18+, normal or corrected-to-normal vision"
+    estimated_time_minutes: 10
+    compensation: "None (academic research)"
+    researcher_contact: "research@example.com"
+    active: true
+    required_fields:
+      - title
+      - survey_url
+      - eligibility
+      - estimated_time_minutes
+      - researcher_contact
+    post_template: |
+      Short perception study using a color slider task (~{estimated_time_minutes} min).
+
+      Eligibility: {eligibility}
+      Compensation: {compensation}
+
+      Link: {survey_url}
+
+      Questions? Contact: {researcher_contact}
+
+    # Aggregate counts only — total submissions and number marked
+    # complete. No individual responses are read or transmitted.
+    data_source:
+      type: mysql
+      database: __redacted__
+      table: __redacted__
+      total_query: "COUNT(*)"
+      complete_filter: "training_termination_reason = 'completed'"
+
+    posting_plan:
+      - subreddit: SampleSize
+        flair: "Academic"
+        timezone: America/New_York
+        slots:
+          - { day: mon, time: "13:00" }
+          - { day: tue, time: "14:00" }
+          - { day: wed, time: "15:00" }
+          - { day: thu, time: "16:00" }
+          - { day: fri, time: "17:00" }
+      - subreddit: TakeMySurvey
+        flair: "Academic"
+        timezone: America/New_York
+        slots:
+          - { day: mon, time: "13:30" }
+          - { day: tue, time: "14:30" }
+          - { day: wed, time: "15:30" }
+          - { day: thu, time: "16:30" }
+          - { day: fri, time: "17:30" }

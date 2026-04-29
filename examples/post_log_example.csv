@@ -1,6 +1,8 @@
-timestamp_iso,study_id,subreddit,action,reason,approver,reddit_post_id
-2026-04-15T14:00:00Z,photo_filter_v1,SampleSize,approved_disabled,posting_disabled_pending_api_approval,megaboots8,
-2026-04-15T14:01:00Z,photo_filter_v1,TakeMySurvey,skipped,per_subreddit_cooldown_active,,
-2026-04-22T10:00:00Z,photo_filter_v1,SampleSize,approved_disabled,posting_disabled_pending_api_approval,megaboots8,
-2026-04-22T10:01:00Z,photo_filter_v1,TakeMySurvey,skipped,daily_post_limit_reached,,
-2026-04-29T15:30:00Z,photo_filter_v1,SampleSize,declined_by_human,human_chose_not_to_post,megaboots8,
+timestamp_iso,study_id,subreddit,action,reason,approver,reddit_post_id,response_count,completion_count,data_source
+2026-04-13T12:00:00Z,study_a,SampleSize,approved_disabled,posting_disabled_pending_api_approval,megaboots8,,123,87,sheets:mock
+2026-04-13T11:00:00Z,study_a,TakeMySurvey,approved_disabled,posting_disabled_pending_api_approval,megaboots8,,123,87,sheets:mock
+2026-04-13T13:00:00Z,study_b,SampleSize,approved_disabled,posting_disabled_pending_api_approval,megaboots8,,410,117,mysql:mock
+2026-04-13T13:30:00Z,study_b,TakeMySurvey,approved_disabled,posting_disabled_pending_api_approval,megaboots8,,410,117,mysql:mock
+2026-04-14T13:00:00Z,study_a,SampleSize,skipped,not_in_scheduled_window,,,,,
+2026-04-14T13:00:00Z,study_a,TakeMySurvey,skipped,per_subreddit_cooldown_active,,,,,
+2026-04-15T12:00:00Z,study_a,SampleSize,declined_by_human,human_chose_not_to_post,megaboots8,,,,
