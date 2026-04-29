@@ -8,7 +8,10 @@ def confirm_post(preview: str) -> tuple[bool, str]:
 
     Returns (approved: bool, approver_name: str).
     The approver name is recorded in the post log for audit purposes.
-    Typing anything other than 'y' or 'yes' (case-insensitive) declines.
+    The operator must type the literal string 'YES' (case-sensitive) to
+    approve. Anything else — including 'y', 'yes', whitespace, or
+    pressing Enter — declines. This is intentionally stricter than
+    typical y/N prompts so approval cannot happen by accident.
     """
     print("\n" + "=" * 60)
     print("PENDING HUMAN APPROVAL")
@@ -16,8 +19,8 @@ def confirm_post(preview: str) -> tuple[bool, str]:
     print(preview)
     print("=" * 60)
 
-    answer = input("Approve this post? (y/N): ").strip()
-    if answer.lower() not in ("y", "yes"):
+    answer = input("Approve this post? Type YES to submit: ").strip()
+    if answer != "YES":
         return False, ""
 
     approver = input("Enter your name/handle for the log: ").strip()

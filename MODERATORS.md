@@ -6,7 +6,7 @@ If you moderate one of the subreddits this scheduler posts to and you would like
 
 ## How to opt out
 
-1. Send a modmail to the account or open an issue on this repo, or contact: **research@example.com**
+1. Send a Reddit message to **`u/PerceptionStudies`**, open an issue on this repo, or email **anthony.walsh@mail.mcgill.ca**.
 2. Include the name of your subreddit.
 3. We will remove your subreddit from the `allowed_subreddits` list in our config within 24 hours and acknowledge by reply.
 
@@ -58,8 +58,9 @@ The only counts we track are aggregate response totals from our own surveys (e.g
 
 ## Contact
 
-- **Email:** research@example.com
-- **Reddit:** `u/PerceptionStudies` (modmail)
+- **Email:** anthony.walsh@mail.mcgill.ca
+- **Reddit (developer):** `u/Fair_Imagination_410`
+- **Reddit (posting account):** `u/PerceptionStudies`
 - **GitHub Issues:** [this repo](https://github.com/Megaboots8/reddit-survey-scheduler-prototype/issues)
 
 We aim to respond within 24 hours.

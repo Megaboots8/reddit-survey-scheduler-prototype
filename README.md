@@ -10,7 +10,7 @@
 
 ## Purpose
 
-This scheduler posts links to recruitment surveys for academic and marketing research studies on a small, curated allowlist of survey-friendly Reddit communities, from a single dedicated account: `u/PerceptionStudies`.
+This scheduler posts survey participation posts — short self-text posts with direct links to online questionnaires — in a small, curated allowlist of survey-friendly Reddit communities, from a single dedicated account: `u/PerceptionStudies`. Studies are non-commercial academic and perception research.
 
 Every post is:
 
@@ -51,13 +51,12 @@ flowchart TD
 
 ## What this scheduler does NOT do
 
-This list is enforced by code, not just policy. Reviewers can grep for any of these terms and find no implementation:
+This list is reflected in the code design: there are no implementations for voting, DMs, automated comments, user scraping, karma manipulation, or ban evasion. Reviewers can grep for any of these terms and find no calls.
 
 - Does **not** vote, upvote, or downvote any post or comment.
 - Does **not** send private messages or chat messages.
 - Does **not** post automated comments or replies.
-- Does **not** scrape, read, or store Reddit user profiles, post histories, follower counts, comment data, or any other user-attributed content.
-- Does **not** read any data from Reddit other than the response from `submit()` (the new post's ID and URL).
+- Does **not** read or store Reddit user data. It may read subreddit-level metadata needed for posting — for example, flair templates and posting requirements — but it does not read user profiles, comments, post histories, votes, follower lists, or any other user-attributed content.
 - Does **not** manipulate karma.
 - Does **not** evade bans, mutes, or rate limits.
 - Does **not** post to any subreddit that is not explicitly on the allowlist.
@@ -99,19 +98,24 @@ A subreddit can only be added by editing the config file — the code refuses to
 
 ## Posting schedule
 
-Each study declares a weekly posting plan per allowed subreddit, in a specific timezone (Eastern). Slots are 25 hours apart so the per-subreddit cooldown always passes. The scheduler is invoked (e.g., once an hour by Task Scheduler / cron) and only posts for slots within a 30-minute window of the scheduled time.
+Each study declares a posting plan per allowed subreddit, in a specific timezone (Eastern). The scheduler is invoked periodically (e.g., once an hour by Task Scheduler / cron) and only posts when the current time falls within a 30-minute window of a scheduled slot.
 
-Example for **Study A** (config-driven, can be edited):
+The example schedule in [`examples/config.example.yaml`](examples/config.example.yaml) is intentionally conservative: **one launch post per study per subreddit**, with at most one post to a given subreddit per day across all studies.
 
-| Day | r/SampleSize (ET) | r/TakeMySurvey (ET) |
+| Day (ET) | Subreddit | Study |
 |---|---|---|
-| Mon | 12:00 | 11:00 |
-| Tue | 13:00 | 12:00 |
-| Wed | 14:00 | 13:00 |
-| Thu | 15:00 | 14:00 |
-| Fri | 16:00 | 15:00 |
+| Mon 12:00 | r/SampleSize | Study A |
+| Tue 12:00 | r/TakeMySurvey | Study A |
+| Wed 12:00 | r/SampleSize | Study B |
+| Thu 12:00 | r/TakeMySurvey | Study B |
 
-**Study B** runs on adjacent slots (1 hour after Study A on r/SampleSize; 30 minutes after Study A on r/TakeMySurvey). See the full plan in [`examples/config.example.yaml`](examples/config.example.yaml).
+This satisfies all the safety gates without conflict:
+
+- The 25-hour per-subreddit cooldown passes because each subreddit gets at most one post per day.
+- The 30-day duplicate-risk window passes because the same study posts to the same subreddit only once.
+- The daily post limit (1) passes for the same reason.
+
+To repost the same study after the 30-day window, the operator deliberately edits the posting plan in config — there is no automatic reposting.
 
 Logic: [`src/reddit_scheduler/schedule.py`](src/reddit_scheduler/schedule.py).
 
@@ -141,8 +145,8 @@ See [`examples/config.example.yaml`](examples/config.example.yaml) for the full 
 
 ```yaml
 global_limits:
-  daily_post_limit: 4
-  per_account_min_gap_minutes: 25
+  daily_post_limit: 1
+  per_account_min_gap_minutes: 60
 
 per_subreddit:
   cooldown_hours: 25
@@ -237,8 +241,9 @@ reddit-survey-scheduler-prototype/
 
 ## Contact
 
-- **Email:** research@example.com
-- **Reddit:** `u/PerceptionStudies` (modmail)
+- **Email:** anthony.walsh@mail.mcgill.ca
+- **Reddit (developer):** `u/Fair_Imagination_410`
+- **Reddit (posting account):** `u/PerceptionStudies`
 - **GitHub Issues:** [this repo](https://github.com/Megaboots8/reddit-survey-scheduler-prototype/issues)
 
 For subreddit moderator opt-out: [MODERATORS.md](MODERATORS.md).

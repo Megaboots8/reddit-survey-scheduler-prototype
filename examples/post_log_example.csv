@@ -1,8 +1,7 @@
 timestamp_iso,study_id,subreddit,action,reason,approver,reddit_post_id,response_count,completion_count,data_source
-2026-04-13T12:00:00Z,study_a,SampleSize,approved_disabled,posting_disabled_pending_api_approval,megaboots8,,123,87,sheets:mock
-2026-04-13T11:00:00Z,study_a,TakeMySurvey,approved_disabled,posting_disabled_pending_api_approval,megaboots8,,123,87,sheets:mock
-2026-04-13T13:00:00Z,study_b,SampleSize,approved_disabled,posting_disabled_pending_api_approval,megaboots8,,410,117,mysql:mock
-2026-04-13T13:30:00Z,study_b,TakeMySurvey,approved_disabled,posting_disabled_pending_api_approval,megaboots8,,410,117,mysql:mock
-2026-04-14T13:00:00Z,study_a,SampleSize,skipped,not_in_scheduled_window,,,,,
-2026-04-14T13:00:00Z,study_a,TakeMySurvey,skipped,per_subreddit_cooldown_active,,,,,
-2026-04-15T12:00:00Z,study_a,SampleSize,declined_by_human,human_chose_not_to_post,megaboots8,,,,
+2026-04-13T16:00:00Z,study_a,SampleSize,approved_disabled,posting_disabled_pending_api_approval,anthony_walsh,,123,87,sheets:mock
+2026-04-14T16:00:00Z,study_a,TakeMySurvey,approved_disabled,posting_disabled_pending_api_approval,anthony_walsh,,124,88,sheets:mock
+2026-04-15T16:00:00Z,study_b,SampleSize,approved_disabled,posting_disabled_pending_api_approval,anthony_walsh,,410,117,mysql:mock
+2026-04-15T16:00:00Z,study_a,SampleSize,skipped,duplicate_risk_within_window,,,,,
+2026-04-16T16:00:00Z,study_b,TakeMySurvey,approved_disabled,posting_disabled_pending_api_approval,anthony_walsh,,412,118,mysql:mock
+2026-04-20T16:00:00Z,study_a,SampleSize,declined_by_human,human_chose_not_to_post,anthony_walsh,,,,

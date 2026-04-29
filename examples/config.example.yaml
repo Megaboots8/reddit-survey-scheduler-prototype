@@ -1,11 +1,11 @@
 posting_account: u/PerceptionStudies
 
 global_limits:
-  daily_post_limit: 4
-  per_account_min_gap_minutes: 25
+  daily_post_limit: 1
+  per_account_min_gap_minutes: 60
 
 per_subreddit:
-  cooldown_hours: 25  # 25-hour gap between similar posts to same subreddit
+  cooldown_hours: 25  # 25-hour minimum gap between any two posts to same subreddit
 
 duplicate_risk:
   similar_title_window_days: 30
@@ -27,7 +27,7 @@ studies:
     eligibility: "Adults 18+, English-speaking"
     estimated_time_minutes: 7
     compensation: "None (academic research)"
-    researcher_contact: "research@example.com"
+    researcher_contact: "anthony.walsh@mail.mcgill.ca"
     active: true
     required_fields:
       - title
@@ -53,25 +53,21 @@ studies:
       sheet_id: __redacted__
       range: "'Form Responses 1'!A:A"
 
+    # One launch post per study per subreddit. The 30-day duplicate-risk
+    # window in safety_checks.low_duplicate_risk prevents reposting the
+    # same study to the same subreddit before then; an operator who
+    # wants to repost after that window edits this plan deliberately.
     posting_plan:
       - subreddit: SampleSize
         flair: "Academic"
         timezone: America/New_York
         slots:
           - { day: mon, time: "12:00" }
-          - { day: tue, time: "13:00" }
-          - { day: wed, time: "14:00" }
-          - { day: thu, time: "15:00" }
-          - { day: fri, time: "16:00" }
       - subreddit: TakeMySurvey
         flair: "Academic"
         timezone: America/New_York
         slots:
-          - { day: mon, time: "11:00" }
           - { day: tue, time: "12:00" }
-          - { day: wed, time: "13:00" }
-          - { day: thu, time: "14:00" }
-          - { day: fri, time: "15:00" }
 
   - id: study_b
     title: "Color Slider Perception Study (10 min)"
@@ -79,7 +75,7 @@ studies:
     eligibility: "Adults 18+, normal or corrected-to-normal vision"
     estimated_time_minutes: 10
     compensation: "None (academic research)"
-    researcher_contact: "research@example.com"
+    researcher_contact: "anthony.walsh@mail.mcgill.ca"
     active: true
     required_fields:
       - title
@@ -106,22 +102,16 @@ studies:
       total_query: "COUNT(*)"
       complete_filter: "training_termination_reason = 'completed'"
 
+    # One launch post per study per subreddit. Different day from
+    # Study A so no two posts hit the same subreddit on the same day.
     posting_plan:
       - subreddit: SampleSize
         flair: "Academic"
         timezone: America/New_York
         slots:
-          - { day: mon, time: "13:00" }
-          - { day: tue, time: "14:00" }
-          - { day: wed, time: "15:00" }
-          - { day: thu, time: "16:00" }
-          - { day: fri, time: "17:00" }
+          - { day: wed, time: "12:00" }
       - subreddit: TakeMySurvey
         flair: "Academic"
         timezone: America/New_York
         slots:
-          - { day: mon, time: "13:30" }
-          - { day: tue, time: "14:30" }
-          - { day: wed, time: "15:30" }
-          - { day: thu, time: "16:30" }
-          - { day: fri, time: "17:30" }
+          - { day: thu, time: "12:00" }
