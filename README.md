@@ -10,12 +10,12 @@
 
 ## Purpose
 
-This scheduler posts survey participation posts — short self-text posts with direct links to online questionnaires — in a small, curated allowlist of survey-friendly Reddit communities, from a single dedicated account: `u/PerceptionStudies`. Studies are non-commercial academic and perception research.
+This scheduler posts survey participation posts — short self-text posts with direct links to online questionnaires — in a small, curated allowlist of survey-friendly Reddit communities, from a single dedicated account: `u/PerceptionStudies`. The initial use case is non-commercial academic and perception research.
 
 Every post is:
 
 - **Scheduled** in advance (specific weekday + time per subreddit, configurable).
-- **Approved by a human** (operator types `y` and their name) before submission.
+- **Approved by a human** (operator must type `YES` and enter their name/handle) before submission.
 - **Limited** by per-subreddit cooldowns (25 hours between similar posts), per-account gaps, and a daily cap.
 - **Allowlisted** to specific subreddits whose rules explicitly permit survey posts.
 - **Tagged** with the correct subreddit flair.
@@ -77,13 +77,13 @@ Two external integrations exist, both **read-only and aggregate-only**, both gat
 
 See [`src/reddit_scheduler/study_status.py`](src/reddit_scheduler/study_status.py) — both integrations are disabled (`SHEETS_ENABLED = False`, `MYSQL_ENABLED = False`) and return deterministic mock counts so the scheduler can run end-to-end for review without any credentials or network access.
 
-The post log records aggregate counts at the moment of posting so we can analyze recruitment effectiveness over time, never tied to any Reddit user.
+The post log records aggregate counts at the moment of posting so we can analyze how many participants each post brings in, never tied to any Reddit user.
 
 ---
 
 ## Account, allowlist, and flair
 
-**Posting account:** `u/PerceptionStudies` — a dedicated research account that posts only survey recruitment posts. No other use.
+**Posting account:** `u/PerceptionStudies` — a dedicated research account that posts only survey participation posts with direct survey links. No other use.
 
 **Allowed subreddits** (defined in [`examples/config.example.yaml`](examples/config.example.yaml), not hardcoded):
 
@@ -100,7 +100,7 @@ A subreddit can only be added by editing the config file — the code refuses to
 
 Each study declares a posting plan per allowed subreddit, in a specific timezone (Eastern). The scheduler is invoked periodically (e.g., once an hour by Task Scheduler / cron) and only posts when the current time falls within a 30-minute window of a scheduled slot.
 
-The example schedule in [`examples/config.example.yaml`](examples/config.example.yaml) is intentionally conservative: **one launch post per study per subreddit**, with at most one post to a given subreddit per day across all studies.
+The example schedule in [`examples/config.example.yaml`](examples/config.example.yaml) is intentionally conservative: **one launch post per study per subreddit**, and the example config allows only one approved post total per day across all subreddits (`daily_post_limit: 1`).
 
 | Day (ET) | Subreddit | Study |
 |---|---|---|
@@ -232,7 +232,7 @@ reddit-survey-scheduler-prototype/
     scheduler.py                     (main flow, gates in order)
     safety_checks.py                 (guardrail functions)
     study_status.py                  (aggregate-only Sheets/MySQL stubs)
-    approval.py                      (human y/N CLI prompt)
+    approval.py                      (strict human YES approval prompt)
     reddit_client.py                 (gated stub)
     post_log.py                      (append-only CSV log)
 ```

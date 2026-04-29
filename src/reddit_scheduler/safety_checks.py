@@ -46,8 +46,9 @@ def respects_subreddit_cooldown(
 ) -> bool:
     """Return True if enough time has passed since the last post to this subreddit.
 
-    Prevents the account from posting the same study to the same subreddit
-    more frequently than once per cooldown window (default: 1 week).
+    Prevents the account from posting to the same subreddit more frequently
+    than the configured cooldown window. This check applies to *any* post in
+    the subreddit, regardless of which study it was for.
     """
     cutoff = datetime.now(tz=timezone.utc) - timedelta(hours=cooldown_hours)
     for row in log_rows:

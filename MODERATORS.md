@@ -31,7 +31,7 @@ Removing your subreddit from the config is therefore both necessary and sufficie
 
 When (and only when) Reddit Data API access is approved and your subreddit is on the allowlist:
 
-- The account `u/PerceptionStudies` will submit a **self-text post** linking to a survey, on the schedule declared in our config (typically once per day in a given subreddit, with a 25-hour minimum gap between posts).
+- The account `u/PerceptionStudies` will submit **self-text posts** linking to surveys only according to the schedule declared in our config, with at most one post per day to a given subreddit and a 25-hour minimum gap between posts. The example config uses one launch post per study per subreddit.
 - Each post is **reviewed and approved by a human** before submission.
 - Each post includes the subreddit's correct flair.
 - Each post complies with the subreddit's posting rules — frequency, content, format. If your rules are stricter than our defaults, our config is updated to match yours.
@@ -50,7 +50,9 @@ When (and only when) Reddit Data API access is approved and your subreddit is on
 
 ## Data we collect from Reddit
 
-**None.** This scheduler does not read any Reddit data — not user profiles, not comments on our own posts, not subscriber counts, not anything. Its only Reddit-side action is creating a post.
+This scheduler does not read, store, or analyze Reddit user data. It may read subreddit-level metadata needed for posting, such as flair templates or posting requirements, but it does not read user profiles, comments, post histories, votes, subscriber lists, or any other user-attributed content.
+
+Its only Reddit-side action is creating approved survey posts in allowlisted subreddits.
 
 The only counts we track are aggregate response totals from our own surveys (e.g., "this Google Form has received 123 submissions"). That data lives entirely outside Reddit and is never tied to any Reddit account.
 

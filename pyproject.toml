@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "reddit-survey-scheduler"
 version = "0.1.0"
-description = "Human-approved scheduler for posting survey recruitment links to an allowlist of Reddit communities"
+description = "Human-approved scheduler for posting survey participation links to an allowlist of Reddit communities"
 requires-python = ">=3.10"
 dependencies = [
     "pyyaml>=6.0",
