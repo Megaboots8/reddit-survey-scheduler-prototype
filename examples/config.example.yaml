@@ -1,0 +1,38 @@
+posting_account: u/PerceptionStudies
+
+global_limits:
+  daily_post_limit: 2
+  per_account_min_gap_hours: 6
+
+per_subreddit:
+  cooldown_hours: 168  # 1 week between posts to same subreddit
+
+duplicate_risk:
+  similar_title_window_days: 30
+
+allowed_subreddits:
+  - SampleSize
+  - TakeMySurvey
+
+studies:
+  - id: photo_filter_v1
+    title: "Photo Filter Preference Survey (5-10 min)"
+    survey_url: https://example.com/survey/photo-filter
+    irb_statement: "IRB approval on file. Contact: research@example.com"
+    eligibility: "Adults 18+, English-speaking"
+    min_required_responses: 0
+    target_responses: 250
+    active: true
+    required_fields:
+      - title
+      - survey_url
+      - irb_statement
+      - eligibility
+    post_template: |
+      Short academic survey on photo filter preferences (5-10 min).
+
+      Eligibility: {eligibility}
+
+      Link: {survey_url}
+
+      {irb_statement}
