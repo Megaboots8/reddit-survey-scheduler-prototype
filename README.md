@@ -16,8 +16,8 @@ Every post is:
 
 - **Scheduled** in advance (specific weekday + time per subreddit, configurable).
 - **Approved by a human** (operator must type `YES` and enter their name/handle) before submission.
-- **Limited** by per-subreddit cooldowns (25 hours between similar posts), per-account gaps, and a daily cap.
-- **Allowlisted** to specific subreddits whose rules explicitly permit survey posts.
+- **Limited** by per-subreddit cooldowns, per-account gaps, duplicate-risk checks, and a daily cap.
+- **Allowlisted** to specific survey-focused subreddits, with current rules manually checked before production use.
 - **Tagged** with the correct subreddit flair.
 - **Logged** in append-only CSV for full audit history.
 
