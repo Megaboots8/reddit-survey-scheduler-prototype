@@ -89,10 +89,12 @@ The post log records aggregate counts at the moment of posting so we can analyze
 
 | Subreddit | Why it's on the list | Default flair |
 |---|---|---|
-| r/SampleSize | Subreddit rules explicitly permit survey posts | Academic |
-| r/TakeMySurvey | Subreddit rules explicitly permit survey posts | Academic |
+| r/SampleSize | Survey-focused subreddit; intended for survey posts based on current subreddit rules | Academic |
+| r/TakeMySurvey | Survey-focused subreddit; intended for survey posts based on current subreddit rules | Academic |
 
 A subreddit can only be added by editing the config file — the code refuses to post to any subreddit not on the list. Moderators can request removal at any time per [MODERATORS.md](MODERATORS.md).
+
+**Before production use, the operator will manually verify each allowlisted subreddit's current rules and remove any subreddit that no longer permits these posts.** This re-check is part of the same manual review that prepares each post for the human approval gate.
 
 ---
 
@@ -197,6 +199,15 @@ Behavior with everything gated:
 
 No network calls to Reddit, Google Sheets, or MySQL are made.
 
+### Tests
+
+```powershell
+pip install -e .[dev]
+pytest
+```
+
+Tests cover the safety gates (allowlist, daily limit, duplicate-window, subreddit/account cooldowns, active study, required fields) and never touch the network. See [`tests/test_safety_checks.py`](tests/test_safety_checks.py).
+
 ---
 
 ## Enabling for production (after API approval)
@@ -235,6 +246,8 @@ reddit-survey-scheduler-prototype/
     approval.py                      (strict human YES approval prompt)
     reddit_client.py                 (gated stub)
     post_log.py                      (append-only CSV log)
+  tests/
+    test_safety_checks.py            (allowlist, cooldowns, daily limit, duplicate, active study)
 ```
 
 ---

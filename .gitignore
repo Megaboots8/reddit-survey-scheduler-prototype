@@ -6,3 +6,13 @@ __pycache__/
 dist/
 build/
 post_log.csv
+
+# Secrets / credentials (do not commit)
+token.json
+credentials.json
+*.sqlite
+*.db
+
+# Pytest / coverage
+.pytest_cache/
+.coverage
